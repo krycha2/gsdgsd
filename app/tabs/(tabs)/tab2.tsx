@@ -1,13 +1,16 @@
-import AddPerson from '@/components/my_ui/AddPerson';
-import { Center } from '@/components/ui/center';
+import PeopleList from '@/components/my_ui/PeopleList';
+import { ScrollView } from 'react-native';
+import { useSafeAreaInsets } from 'react-native-safe-area-context';
+
 export default function Tab2() {
+  const insets = useSafeAreaInsets();
+  const topPadding = insets.top + 64 + 24;
+  
   return (
-    <Center className="flex-1 bg-orange-foreground">
-      {/*<Heading className="font-bold text-2xl">Expo- Tab 2</Heading>
-      <Divider className="my-[30px] w-[80%]" />
-      <Text className="p-4">Example below to use gluestack-ui components.</Text>
-      <EditScreenInfo path="app/(app)/(tabs)/tab2.tsx" />*/}
-      <AddPerson></AddPerson>
-    </Center>
+    <ScrollView 
+      className="flex-1 bg-orange-foreground"
+      contentContainerStyle={{ alignItems: 'center', paddingTop: topPadding, paddingBottom: 40 }}>
+        <PeopleList />
+    </ScrollView>
   );
 }
