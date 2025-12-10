@@ -51,6 +51,7 @@ export default function Tab1() { // Zmieniłem nazwę funkcji na Tab1 zgodnie z 
             {/* Opcjonalny nagłówek sekcji listy */}
             <Heading size="lg" className="font-bold text-white mb-4 ml-1 text-center md:text-left">
                 All Profiles
+                
             </Heading>
             
             {/* Sam komponent listy */}

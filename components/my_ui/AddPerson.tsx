@@ -7,7 +7,6 @@ import * as ImagePicker from 'expo-image-picker';
 // UI z Gluestack
 import { Avatar, AvatarFallbackText, AvatarImage } from '@/components/ui/avatar';
 import { Box } from '@/components/ui/box';
-import { Button, ButtonSpinner, ButtonText } from '@/components/ui/button';
 import { FormControl, FormControlLabel, FormControlLabelText } from '@/components/ui/form-control';
 import { Heading } from '@/components/ui/heading';
 import { Input, InputField } from '@/components/ui/input';
@@ -18,7 +17,20 @@ import { VStack } from '@/components/ui/vstack';
 import { BASE_URL, ENDPOINTS } from '@/utils/config';
 import { generateId } from '@/utils/generatePersonId';
 
-export default function AddPerson() {
+type UserCounterProps = {
+  className?: string;           
+  bg?: string;                         
+  textcolor?: string;           
+  minimwh?: string;             
+};
+
+
+export default function AddPerson({
+  className = "", 
+  bg = 'bg-orange-foreground', 
+  textcolor = 'text-white',
+  minimwh = 'min-w-[1200px] min-h-[400px]',  
+}: UserCounterProps) {
   const router = useRouter();
   
   // Stany
@@ -123,92 +135,106 @@ const handleSave = async () => {
   };
 
   return (
-    <KeyboardAvoidingView 
-      behavior={Platform.OS === "ios" ? "padding" : "height"} 
-      style={{ flex: 1 }}
+    <Box
+      className={`${bg} border border-orange-primary/20 shadow-sm rounded-2xl p-6 items-start  flex-none  ${minimwh} ${className}`}
     >
-      <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
-        <Box className="flex-1 bg-background p-4">
-          
-          <Heading size="xl" className="text-primary mb-6 mt-4">
-            Dodaj Osobę
-          </Heading>
+      <KeyboardAvoidingView 
+        behavior={Platform.OS === "ios" ? "padding" : "height"} 
+        style={{ flex: 1 }}
+      >
+        <ScrollView contentContainerStyle={{ flexGrow: 1 }}>
+          <Box className="flex-1 bg-background items-center">
 
-          <VStack space="xl" className="items-center">
-            
-            {/* KLIKALNY AVATAR */}
-            <TouchableOpacity onPress={pickImage}>
-              <Avatar size="2xl" className="bg-surface border-2 border-primary">
-                {selectedImage ? (
-                  <AvatarImage 
-                    source={{ uri: selectedImage }} 
-                    alt="Zdjęcie profilowe"
-                  />
-                ) : (
-                  <AvatarFallbackText className="text-white text-3xl">
-                    {firstName ? firstName[0] : "+"}
-                  </AvatarFallbackText>
-                )}
-              </Avatar>
-              <Text size="xs" className="text-primary text-center mt-2 font-bold">
-                {selectedImage ? "ZMIEŃ ZDJĘCIE" : "DODAJ ZDJĘCIE"}
-              </Text>
-            </TouchableOpacity>
+            <Heading size="xl" className="text-primary mb-6 mt-4">
+              Dodaj Osobę
+            </Heading>
 
-            {/* FORMULARZ */}
-            <Box className="w-full">
-                
-                {/* IMIĘ */}
-                <FormControl isRequired={true} className="mb-4">
-                    <FormControlLabel>
-                        <FormControlLabelText className="text-foreground">Imię</FormControlLabelText>
-                    </FormControlLabel>
-                    <Input variant="outline" size="md" className="border-border bg-surface">
-                        <InputField 
-                        placeholder="Wpisz imię..." 
-                        value={firstName}
-                        onChangeText={setFirstName}
-                        className="text-foreground placeholder:text-textMuted"
-                        />
-                    </Input>
-                </FormControl>
+            <VStack space="xl" className="items-center">
 
-                {/* NAZWISKO */}
-                <FormControl className="mb-4">
-                    <FormControlLabel>
-                        <FormControlLabelText className="text-foreground">Nazwisko</FormControlLabelText>
-                    </FormControlLabel>
-                    <Input variant="outline" size="md" className="border-border bg-surface">
-                        <InputField 
-                        placeholder="Wpisz nazwisko..." 
-                        value={lastName}
-                        onChangeText={setLastName}
-                        className="text-foreground placeholder:text-textMuted"
-                        />
-                    </Input>
-                </FormControl>
+              {/* KLIKALNY AVATAR */}
+              <TouchableOpacity onPress={pickImage}>
+                <Avatar size="2xl" className="bg-surface border border-orange-primary/20">
+                  {selectedImage ? (
+                    <AvatarImage 
+                      source={{ uri: selectedImage }} 
+                      alt="Zdjęcie profilowe"
+                    />
+                  ) : (
+                    <AvatarFallbackText className="text-white text-3xl">
+                      {firstName ? firstName[0] : "+"}
+                    </AvatarFallbackText>
+                  )}
+                </Avatar>
+                <Text size="xs" className="text-primary text-center mt-2 font-bold">
+                  {selectedImage ? "ZMIEŃ ZDJĘCIE" : "DODAJ ZDJĘCIE"}
+                </Text>
+              </TouchableOpacity>
 
-                {/* PRZYCISK ZAPISZ */}
-                <Button 
-                    size="lg" 
-                    action="primary" 
+              {/* FORMULARZ */}
+              <Box className="w-full">
+
+                  {/* IMIĘ */}
+                  <FormControl isRequired={true} className="mb-4">
+                      <FormControlLabel>
+                          <FormControlLabelText className={`text-foreground ${textcolor}`}>Imię</FormControlLabelText>
+                      </FormControlLabel>
+                      <Input variant="outline" size="md" className="border border-orange-primary/20 bg-surface data-[hover=true]:border-orange-primary/50 data-[hover=true]:bg-orange-foreground2/35">
+                          <InputField 
+                          placeholder="Wpisz imię..." 
+                          value={firstName}
+                          onChangeText={setFirstName}
+                          className="text-orange-card placeholder:text-textMuted text-[11px]"
+                          />
+                      </Input>
+                  </FormControl>
+
+                  {/* NAZWISKO */}
+                  <FormControl className="mb-4">
+                      <FormControlLabel>
+                          <FormControlLabelText className={`text-foreground ${textcolor}`}>Nazwisko</FormControlLabelText>
+                      </FormControlLabel>
+                      <Input variant="outline" size="md" className="border border-orange-primary/20 bg-surface data-[hover=true]:border-orange-primary/50 data-[hover=true]:bg-orange-foreground2/35">
+                          <InputField 
+                          placeholder="Wpisz nazwisko..." 
+                          value={lastName}
+                          onChangeText={setLastName}
+                          className="text-orange-card placeholder:text-textMuted text-[11px]"
+                          />
+                      </Input>
+                  </FormControl>
+
+                  {/* PRZYCISK ZAPISZ */}
+                  <TouchableOpacity 
                     onPress={handleSave}
-                    isDisabled={isLoading}
-                    className="mt-4 bg-primary border-primary"
-                >
-                    {isLoading ? (
-                        <ButtonSpinner color="white" />
-                    ) : (
-                        <ButtonText className="text-white font-bold">
-                        Zapisz w bazie
-                        </ButtonText>
-                    )}
-                </Button>
-            </Box>
+                    activeOpacity={0.7} // To daje efekt wizualny przy kliknięciu (zamiast hover)
+                    className="mt-8 w-full h-12 justify-center border border-orange-primary/20 bg-orange-foreground rounded-lg flex-row items-center px-4"
+                  >
+                      {/* Tekst - w React Native tekst MUSI być w <Text> */}
+                      <Text className={`${textcolor} font-medium text-base`}>
+                          Nowa osoba
+                      </Text>
+                  </TouchableOpacity>
+                  {/*<Button 
+                      size="lg" 
+                      action="primary" 
+                      onPress={handleSave}
+                      isDisabled={isLoading}
+                      className="mt-4 bg-primary border-primary"
+                  >
+                      {isLoading ? (
+                          <ButtonSpinner color="white" />
+                      ) : (
+                          <ButtonText className="text-white font-bold">
+                          Zapisz w bazie
+                          </ButtonText>
+                      )}
+                  </Button>*/}
+              </Box>
 
-          </VStack>
-        </Box>
-      </ScrollView>
-    </KeyboardAvoidingView>
+            </VStack>
+          </Box>
+        </ScrollView>
+      </KeyboardAvoidingView>
+    </Box>
   );
 }

@@ -14,4 +14,8 @@ export interface Person {
     birth_year?: number | null;
     nickname?: string | null;
     profile_pic?: string | null; // Tu jest nazwa pliku bez 'avatar_'
+    instagram?: string | null;
+    fon_number?: number | null;
+    e_mail?: string | null;
+    relationship_status?: string | null;
 }
